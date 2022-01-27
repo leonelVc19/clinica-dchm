@@ -1,19 +1,11 @@
 import * as React from 'react';
-import Tarjetas from './cards';
+import Cards from './Cards';
 import { Link } from 'react-router-dom';
 
-//Card
-import { experimentalStyled  } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { Button, CardActionArea, CardActions } from '@mui/material';
-
-import { experimentalStyled as styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-
+import {useState} from 'react';
 
 /**Breadcrumbs */
 import Breadcrumbs from '@mui/material/Breadcrumbs';
@@ -22,12 +14,24 @@ import Stack from '@mui/material/Stack';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 //Imagen para Inicio
-import inicio from './img/inicio.jpg';
+import imagenes from './imagenes';
 
 const Tratamientos = () => {
 
-
-
+ const [cartas] = useState([
+   {id:1, name:'PATOLOGÍA BUCAL', imagen: imagenes.img1},
+   {id:2, name:'ORTODONCIA', imagen: imagenes.img2},
+   {id:3, name:'PERIODONCIA', imagen: imagenes.img3},
+   {id:4, name:'IMPLANTOLOGÍA Y PROTESIS BUCAL', imagen: imagenes.img4},
+   {id:5, name:'CIRUGÍA MAXLOFACIAL', imagen: imagenes.img5},
+   {id:6, name:'LIMPIEZA BUCAL', imagen: imagenes.img6},
+ ]);
+    const renderCards = () => {
+        //hacer un map del arreeglo de productos a tarjetas.
+       return cartas.map((item) => (
+           <Cards card={item} />
+        ))
+    }
 
 /**Breadcrumbs */
     const breadcrumbs = [
@@ -40,43 +44,29 @@ const Tratamientos = () => {
           Tratamientos
         </Typography>,
       ];
-
+////
     return(
-
-        <div>
-     
-             <Box 
-                sx={{
-                  width: 'auto',
-                  height: 300,
-                  borderRadius:2,
-                  padding: 6,
+      <Paper style={{ padding:20}}>
+            <Box sx={{ width: 'auto', height: 300, borderRadius:2, padding: 6,
                   '&:hover': {
                     backgroundColor: 'primary.info',
                     opacity: [0.7, 0.9, 0.7],
                   },
                 }}
-                style={{ backgroundImage: `url(${inicio})`, height:200, weidth:300, borderColor: 'black', }}>
+                style={{ backgroundImage: `url(${imagenes.img})`, height:200, weidth:300, borderColor: 'black', }}>
                 <Typography sx={{ fontWeight: 'bold' }} variant="h4" gutterBottom component="div">
                   Tratamientos
                 </Typography> 
-             </Box>
-    
+            </Box>
            <Stack  style={{ paddingTop:10}} >
                 <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
                     {breadcrumbs}
                 </Breadcrumbs>
             </Stack>
-            <p></p>
-           <Tarjetas />
-
-        </div>
-     
-       
-
-        
+            <Grid container spacing={2} sx={{padding:1}}>
+                {renderCards()}
+            </Grid>
+      </Paper>
     )
 };
-
-
 export default Tratamientos;   
